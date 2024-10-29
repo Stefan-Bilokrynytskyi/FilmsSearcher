@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { MovieCardData } from "../models/MoviesModels";
+import Star from "../assets/icons/star.svg";
 
 const MovieCard: React.FC<{ movie: MovieCardData }> = ({ movie }) => {
   return (
@@ -10,8 +11,11 @@ const MovieCard: React.FC<{ movie: MovieCardData }> = ({ movie }) => {
       />
       <Text style={styles.title}>{movie.title}</Text>
       <View style={styles.ratingContainer}>
-        <Text style={styles.rating}>{movie.vote_average}</Text>
-        <Text style={styles.releaseDate}>{movie.release_date}</Text>
+        <Star width={20} height={20} />
+        <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
+        <Text style={styles.releaseDate}>
+          {movie.release_date.slice(0, 4)}, HDRip
+        </Text>
       </View>
     </View>
   );
@@ -40,14 +44,14 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   rating: {
-    fontSize: 14,
-    color: "#fff",
+    fontSize: 16,
+    color: "#FFA500",
     marginLeft: 5,
   },
   releaseDate: {
-    fontSize: 14,
-    color: "#fff",
-    marginTop: 5,
+    fontSize: 16,
+    color: "#8D8A8A",
+    marginLeft: 5,
   },
   star: {
     width: 20,

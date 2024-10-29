@@ -43,7 +43,6 @@ export default function FilmsScreen() {
   if (data) {
     content = (
       <View style={styles.container}>
-        <Text style={styles.title}>MOVIES</Text>
         <FlatList
           data={data.movies}
           numColumns={2}
@@ -51,6 +50,7 @@ export default function FilmsScreen() {
           renderItem={({ item }) => <MovieCard movie={item} />}
           style={styles.list}
           columnWrapperStyle={styles.columnWrapper}
+          ListHeaderComponent={<Text style={styles.title}>MOVIES</Text>}
         />
       </View>
     );
