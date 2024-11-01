@@ -7,12 +7,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../navigation/routes";
+import { RootStackAuthNavigation } from "../navigation/routes";
 import { LinearGradient } from "expo-linear-gradient";
 import Logo from "../components/Logo";
 
 type SignInScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
+  RootStackAuthNavigation,
   "Welcome"
 >;
 
@@ -56,7 +56,10 @@ export default function WelcomeScreen() {
             </Text>
 
             <Pressable
-              style={({ pressed }) => [pressed ? styles.buttonPressed : null]}
+              style={({ pressed }) => [
+                styles.buttonSignUp,
+                pressed ? styles.buttonPressed : null,
+              ]}
               onPress={() => navigation.navigate("SignUp")}
             >
               <Text style={styles.buttonSignUpText}>Sign Up</Text>
@@ -136,13 +139,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 5,
   },
+  buttonSignUp: {
+    borderBottomColor: "#FFA500",
+    borderBottomWidth: 1,
+    borderStyle: "dashed",
+  },
   buttonSignUpText: {
     color: "#FFA500",
     fontSize: 20,
     fontWeight: "bold",
-    borderBottomColor: "#FFA500",
-    borderBottomWidth: 1,
-    borderStyle: "dashed",
   },
   buttonPressed: {
     opacity: 0.5,

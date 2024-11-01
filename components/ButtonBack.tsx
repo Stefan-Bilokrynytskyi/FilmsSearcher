@@ -1,13 +1,19 @@
+import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import Arrow from "../assets/icons/arrow-left.svg";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../navigation/routes";
 
-const ButtonBack = () => {
-  const navigation = useNavigation();
+interface ButtonBackProps {
+  targetScreen: keyof RootStackParamList;
+}
+
+const ButtonBack: React.FC<ButtonBackProps> = ({ targetScreen }) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <Pressable
       style={({ pressed }) => [pressed ? styles.buttonPressed : null]}
-      onPress={() => navigation.goBack()}
+      onPress={() => navigation.navigate(targetScreen)}
     >
       <Arrow width={32} height={32} />
     </Pressable>

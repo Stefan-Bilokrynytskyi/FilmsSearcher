@@ -4,6 +4,8 @@ import { fetchMovies } from "../http/queries";
 import { MovieCardData } from "../models/MoviesModels";
 import { useState } from "react";
 import MovieCard from "../components/MovieCard";
+import { useSelector } from "react-redux";
+import { authStoreState } from "../store/authStore";
 
 export default function FilmsScreen() {
   const [page, setPage] = useState<number>(1);
