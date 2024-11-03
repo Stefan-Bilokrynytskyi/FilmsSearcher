@@ -16,36 +16,126 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { authStoreActions, authStoreState } from "./store/authStore";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Provider } from "react-redux";
+import UserAccountScreen from "./screens/UserAccountScreen";
 import store from "./store";
+import Home from "./assets/icons/home.svg";
+import Account from "./assets/icons/account.svg";
+import HeaderAccount from "./components/HeaderAccount";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function AccountNavigation() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#1b2045" },
+        headerTintColor: "white",
+        contentStyle: { backgroundColor: "#1b2045" },
+      }}
+    >
+      <Stack.Screen
+        name="userInfo"
+        component={UserAccountScreen}
+        options={{
+          header: () => <HeaderAccount />,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function FilmsNavigation() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#1b2045" },
+        headerTintColor: "white",
+        contentStyle: { backgroundColor: "#1b2045" },
+      }}
+    >
+      <Stack.Screen
+        name="Films"
+        component={FilmsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ErrorScreen"
+        component={ErrorScreen}
+        options={{
+          header: () => <HeaderDefault />,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function appNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Tab.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: "#1b2045" },
           headerTintColor: "white",
-          contentStyle: { backgroundColor: "#1b2045" },
+          tabBarStyle: {
+            backgroundColor: "#0c0e1f",
+            borderTopWidth: 0,
+            paddingTop: 20,
+          },
         }}
       >
-        <Stack.Screen
-          name="Films"
-          component={FilmsScreen}
+        <Tab.Screen
+          name="Home"
+          component={FilmsNavigation}
           options={{
             headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#edf1f3" : "#8D8A8A",
+                  marginTop: 10,
+                }}
+              >
+                Movies
+              </Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <Home
+                width={28}
+                height={28}
+                fill={focused ? "#edf1f3" : "#8D8A8A"}
+              />
+            ),
           }}
         />
-        <Stack.Screen
-          name="ErrorScreen"
-          component={ErrorScreen}
+        <Tab.Screen
+          name="Account"
+          component={AccountNavigation}
           options={{
-            header: () => <HeaderDefault />,
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#edf1f3" : "#8D8A8A",
+                  marginTop: 10,
+                }}
+              >
+                Account
+              </Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <Account
+                width={32}
+                height={32}
+                fill={focused ? "#edf1f3" : "#8D8A8A"}
+              />
+            ),
           }}
         />
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

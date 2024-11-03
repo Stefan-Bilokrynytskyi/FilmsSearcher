@@ -6,6 +6,7 @@ import { useState } from "react";
 import MovieCard from "../components/MovieCard";
 import { useSelector } from "react-redux";
 import { authStoreState } from "../store/authStore";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function FilmsScreen() {
   const [page, setPage] = useState<number>(1);
@@ -54,6 +55,11 @@ export default function FilmsScreen() {
           columnWrapperStyle={styles.columnWrapper}
           ListHeaderComponent={<Text style={styles.title}>MOVIES</Text>}
         />
+        <LinearGradient
+          colors={["transparent", "rgba(0,0,0,0.45)"]}
+          style={styles.gradientOverlay}
+          pointerEvents="none"
+        />
       </View>
     );
   }
@@ -63,8 +69,9 @@ export default function FilmsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 50,
+    paddingTop: 50,
     paddingHorizontal: 10,
+    position: "relative",
   },
   title: {
     color: "#fff",
@@ -78,5 +85,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 10,
     gap: 15,
+  },
+  gradientOverlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "25%",
   },
 });

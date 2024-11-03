@@ -37,15 +37,16 @@ export default function SignInScreen() {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: async (data: {
       email: string;
-
       password: string;
-    }): Promise<{ status: number; token: string }> => {
+    }): Promise<{ status: number; token: string; userId: string }> => {
       const result = await signInFirebase(data.email, data.password);
       return result;
     },
     onSuccess: (data) => {
       if (data.status === 200) {
-        dispatch(authStoreActions.signIn({ token: data.token }));
+        dispatch(
+          authStoreActions.signIn({ token: data.token, userId: data.userId })
+        );
       }
     },
     onError: (error) => {

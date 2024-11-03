@@ -67,7 +67,7 @@ export const signUpFirebase = async (
 export const signInFirebase = async (
   email: string,
   password: string
-): Promise<{ status: number; token: string }> => {
+): Promise<{ status: number; token: string; userId: string }> => {
   try {
     const userData = await axios.post(
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
@@ -89,7 +89,11 @@ export const signInFirebase = async (
       throw new Error("User email is not verified.");
     }
 
-    return { status: userData.status, token: userData.data.idToken };
+    return {
+      status: userData.status,
+      token: userData.data.idToken,
+      userId: userData.data.localId,
+    };
   } catch (error: any) {
     if (error.response && error.response.data && error.response.data.error) {
       console.log(error.response.data.error.message);
@@ -102,5 +106,19 @@ export const signInFirebase = async (
       console.log(error);
       throw new Error(error.message || "An error occurred");
     }
+  }
+};
+
+export const getUserInfo = async (
+  token: string | null,
+  userId: string | null
+): Promise<{ username: string }> => {
+  try {
+    const res = await axios.get(
+      `https://moviess-9bed7-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json?auth=${token}`
+    );
+    return { username: res.data.username };
+  } catch (error: any) {
+    throw new Error(error.message || "An error occurred");
   }
 };
