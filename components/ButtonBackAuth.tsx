@@ -8,7 +8,7 @@ interface ButtonBackProps {
   targetScreen: keyof RootStackAuthNavigation;
 }
 
-const ButtonBack: React.FC<ButtonBackProps> = ({ targetScreen }) => {
+const ButtonBackAuth: React.FC<ButtonBackProps> = ({ targetScreen }) => {
   const navigation = useNavigation<NavigationProp<RootStackAuthNavigation>>();
   return (
     <Pressable
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ButtonBack;
+export default ButtonBackAuth;

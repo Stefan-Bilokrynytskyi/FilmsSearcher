@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import ButtonBack from "./ButtonBack";
+import ButtonBackAuth from "./ButtonBackAuth";
 import Logo from "./Logo";
 
 const HeaderAuthentification = () => {
   return (
     <View style={styles.headerContainer}>
-      <ButtonBack targetScreen="Welcome" />
+      <ButtonBackAuth targetScreen="Welcome" />
       <Logo />
       <View style={styles.rightContainer} />
     </View>

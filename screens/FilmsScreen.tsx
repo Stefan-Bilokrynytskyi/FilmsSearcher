@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { fetchMovies } from "../http/queries";
 import { MovieCardData } from "../models/MoviesModels";
 import { useState } from "react";
 import MovieCard from "../components/MovieCard";
-import { useSelector } from "react-redux";
-import { authStoreState } from "../store/authStore";
 import { LinearGradient } from "expo-linear-gradient";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackFilmsNavigation } from "../navigation/routes";
+import { useNavigation } from "@react-navigation/native";
 
-export default function FilmsScreen() {
+type FilmsScreenNavigationProp = StackNavigationProp<
+  RootStackFilmsNavigation,
+  "Films"
+>;
+
+const FilmsScreen = () => {
   const [page, setPage] = useState<number>(1);
   const {
     data,
@@ -24,6 +30,7 @@ export default function FilmsScreen() {
         ),
     }
   );
+  const navigation = useNavigation<FilmsScreenNavigationProp>();
   let content: JSX.Element | null = null;
 
   if (isLoading) {
@@ -50,7 +57,19 @@ export default function FilmsScreen() {
           data={data.movies}
           numColumns={2}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <MovieCard movie={item} />}
+          renderItem={({ item }) => (
+            <Pressable
+              style={styles.card}
+              onPress={() =>
+                navigation.navigate("FilmDetails", {
+                  filmId: item.id.toString(),
+                  previousScreen: "Films",
+                })
+              }
+            >
+              <MovieCard movie={item} />
+            </Pressable>
+          )}
           style={styles.list}
           columnWrapperStyle={styles.columnWrapper}
           ListHeaderComponent={<Text style={styles.title}>MOVIES</Text>}
@@ -64,7 +83,7 @@ export default function FilmsScreen() {
     );
   }
   return <>{content}</>;
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -93,4 +112,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: "25%",
   },
+  card: {
+    flex: 1,
+    marginVertical: 10,
+    borderRadius: 8,
+  },
 });
+
+export default FilmsScreen;

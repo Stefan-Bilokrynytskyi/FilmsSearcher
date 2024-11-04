@@ -16,8 +16,10 @@ export default function UserAccountScreen() {
     error,
   }: UseQueryResult<{ username: string }> = useQuery({
     queryKey: ["userInfo", authStore.userId],
-    queryFn: () => getUserInfo(authStore.token, authStore.userId),
+    queryFn: () => getUserInfo(authStore.token ?? "", authStore.userId ?? ""),
   });
+
+  console.log(authStore);
 
   let content: JSX.Element | null = null;
 

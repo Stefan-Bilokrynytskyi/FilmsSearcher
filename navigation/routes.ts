@@ -6,7 +6,11 @@ export type RootStackAuthNavigation = {
   VerifyEmail: undefined;
 };
 
-export type RootStackAppNavigation = {
+export type RootStackFilmsNavigation = {
   Films: undefined;
+  FilmDetails: {
+    filmId: string;
+    previousScreen: keyof RootStackFilmsNavigation;
+  };
   ErrorScreen: undefined;
 };

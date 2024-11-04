@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { MovieCardData } from "../models/MoviesModels";
 import Star from "../assets/icons/star.svg";
+import { useNavigation } from "@react-navigation/native";
 
 const MovieCard: React.FC<{ movie: MovieCardData }> = ({ movie }) => {
   return (
-    <View style={styles.card}>
+    <>
       <Image
         source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }}
         style={styles.poster}
@@ -17,16 +18,11 @@ const MovieCard: React.FC<{ movie: MovieCardData }> = ({ movie }) => {
           {movie.release_date.slice(0, 4)}, HDRip
         </Text>
       </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    marginVertical: 10,
-    borderRadius: 8,
-  },
   poster: {
     width: "100%",
     aspectRatio: 2 / 3,

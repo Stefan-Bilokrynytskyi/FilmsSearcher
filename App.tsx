@@ -23,6 +23,7 @@ import store from "./store";
 import Home from "./assets/icons/home.svg";
 import Account from "./assets/icons/account.svg";
 import HeaderAccount from "./components/HeaderAccount";
+import FilmDetailsScreen from "./screens/FilmDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +60,13 @@ function FilmsNavigation() {
       <Stack.Screen
         name="Films"
         component={FilmsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="FilmDetails"
+        component={FilmDetailsScreen}
         options={{
           headerShown: false,
         }}
@@ -205,8 +213,9 @@ function Root() {
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("token");
+      const userId = await AsyncStorage.getItem("userId");
       if (token) {
-        dispatch(authStoreActions.signIn({ token }));
+        dispatch(authStoreActions.signIn({ token, userId }));
       }
       setIsAuthenticating(false);
     };
